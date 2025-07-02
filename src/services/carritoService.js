@@ -41,6 +41,7 @@ export const obtenerCarrito = async () => {
 export const obtenerCarritoLocal = () => {
   const local = localStorage.getItem("carrito");
   if (local) {
+    console.log(JSON.parse(local));
     return JSON.parse(local);
   }
   return [];

@@ -3,22 +3,20 @@ import InputField from "./InputField.jsx";
 import ToggleLink from "./ToggleLink.jsx";
 import "../../styles/global.css";
 import { useNavigate } from "react-router-dom";
-
-
 import { UserContext } from "../../context/UserContext.jsx";
-
 
 export default function AuthForm() {
   const navigate = useNavigate();
   const { usuario, setUsuario, guardarUsuario, iniciarSesion } =
     useContext(UserContext);
 
-  useEffect(()=>{
-    localStorage.getItem("token")
-      ? navigate("/")
-      : null;
-  },[usuario, navigate])
-  
+  useEffect(() => {
+    // Si hay token en localStorage, redirige al inicio
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, [usuario, navigate]);
+
   const [mode, setMode] = useState("login");
   const initialRegister = {
     nombre: "",
@@ -27,14 +25,17 @@ export default function AuthForm() {
     reContrasena: "",
   };
   const initialLogin = { correo: "", contrasena: "" };
+
   const [formData, setFormData] = useState(initialRegister);
   const [errors, setErrors] = useState({});
+  const [alerta, setAlerta] = useState(""); // Estado para mostrar mensajes de error
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Validación del formulario
   const validate = () => {
     const newErrors = {};
     if (mode === "register") {
@@ -54,6 +55,7 @@ export default function AuthForm() {
     return newErrors;
   };
 
+  // Envía los datos del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -67,32 +69,44 @@ export default function AuthForm() {
     }
   };
 
-  // Cuando se implemente la lógica de registro
+  // Función para mostrar mensajes temporales
+  const mostrarAlerta = (mensaje) => {
+    setAlerta(mensaje);
+    setTimeout(() => setAlerta(""), 3000); // Oculta después de 3 segundos
+  };
+
+  // Registro
   const onRegister = async (data) => {
-    console.log(data)
-    let onRegister = async () => {
-      const getUserReg = await guardarUsuario(data);
-      console.log(getUserReg);
-    };
-
-    onRegister();
-  };
-  
-  // Cuando se implemente la lógica de inicio de sesión
-  const onLogin = async (data) => {
-    let onLogin = async ()=>{
-      const getLogin = await iniciarSesion(data);
-      getLogin ? (
-        setUsuario(getLogin.token),
-        localStorage.setItem("token", [getLogin.token || ""]),
-        navigate("/")
-      ) : null
-      
+    try {
+      const respuesta = await guardarUsuario(data);
+      if (!respuesta || respuesta.error) {
+        throw new Error(respuesta?.mensaje || "Error al registrarse");
+      }
+      navigate("/");
+    } catch (error) {
+      mostrarAlerta(error.response.data.error);
     }
-    
-    onLogin()
   };
 
+  // Login
+  const onLogin = async (data) => {
+    try {
+      const { correo, contrasena } = data;
+      const getLogin = await iniciarSesion({ correo, contrasena });
+
+      if (!getLogin || !getLogin.token) {
+        throw new Error(getLogin?.mensaje || "Credenciales inválidas");
+      }
+
+      setUsuario(getLogin.token);
+      localStorage.setItem("token", getLogin.token);
+      navigate("/");
+    } catch (error) {
+      mostrarAlerta(error.message);
+    }
+  };
+
+  // Cambiar entre modo login y registro
   const toggleMode = () => {
     const newMode = mode === "register" ? "login" : "register";
     setMode(newMode);
@@ -105,10 +119,19 @@ export default function AuthForm() {
       onSubmit={handleSubmit}
       className="bg-white p-6 rounded-lg border border-blue-500 max-w-md w-full mx-auto shadow"
     >
+      {/* Título */}
       <h2 className="text-center text-2xl font-bold text-blue-800 mb-6">
         {mode === "register" ? "Registro" : "Inicio de sesión"}
       </h2>
 
+      {/* Mensaje de error temporal */}
+      {alerta && (
+        <div className="bg-red-200 text-red-800 font-semibold px-4 py-2 rounded mb-4 text-center transition-opacity duration-300">
+          {alerta}
+        </div>
+      )}
+
+      {/* Campos del formulario */}
       {mode === "register" ? (
         <>
           <InputField
@@ -164,6 +187,7 @@ export default function AuthForm() {
         </>
       )}
 
+      {/* Botón */}
       <button
         type="submit"
         className="w-full mt-4 py-2 bg-blue-800 text-white font-semibold rounded hover:bg-blue-700 transition duration-200"
@@ -171,6 +195,7 @@ export default function AuthForm() {
         {mode === "register" ? "Crear Cuenta" : "Ingresar"}
       </button>
 
+      {/* Cambiar entre login y registro */}
       <ToggleLink mode={mode} onToggle={toggleMode} />
     </form>
   );
