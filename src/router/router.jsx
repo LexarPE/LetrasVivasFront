@@ -3,19 +3,19 @@
 
 import { createBrowserRouter } from "react-router-dom";
 
-
 import Inicio from "../pages/Inicio";
-import LogReg from "../pages/LoginRegistro"; // Colocar como ruta inicial
-import DetalleLibro from "../pages/DetalleLibro"; 
+import LogReg from "../pages/LoginRegistro";
+import DetalleLibro from "../pages/DetalleLibro";
+import FavoritosPage from "../pages/FavoritosPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    // element: <Nav />,
+    // element: <Nav />
     children: [
       {
         index: true,
-        element: <Inicio/>,
+        element: <Inicio />,
       },
       {
         path: "logReg",
@@ -24,7 +24,11 @@ export const router = createBrowserRouter([
       {
         path: "libros/:id",
         element: <DetalleLibro />,
-        // loader: //funcion fetch    ===> useLoaderData() en DetalleLibro.jsx para obtener datos
+        // loader: ...
+      },
+      {
+        path: "favoritos",
+        element: <FavoritosPage />,
       },
     ],
   },

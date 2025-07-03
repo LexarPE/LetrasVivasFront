@@ -33,6 +33,7 @@
   cursor: pointer;
 }
 
+/* Imagen del libro */
 .libro-card img {
   width: 100%;
   height: auto;
@@ -63,4 +64,39 @@
   font-weight: bold;
   color: #3d5a80;
   text-transform: uppercase;
+}
+
+/* Efecto 'Leer' */
+.imagen-con-hover {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.imagen-con-hover img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.overlay-leer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.imagen-con-hover:hover .overlay-leer {
+  opacity: 1;
 }

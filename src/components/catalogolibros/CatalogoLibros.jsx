@@ -60,9 +60,9 @@ function CatalogoLibros({ libros, masvendidosLibros }) {
   return (
     <div className="catalogo-container">
       <div className="banners">
-        <img src="/banner1.jpg" alt="Banner 1" />
-        <img src="/banner2.jpg" alt="Banner 2" />
-        <img src="/banner3.jpg" alt="Banner 3" />
+        <img src="https://www.crisol.com.pe/media/wysiwyg/campania-home-d/bnd_banner_secundario_infantil-01-07.jpg" alt="Banner 1" />
+        <img src="https://www.crisol.com.pe/media/wysiwyg/campania-home-d/bnd_banner_secundario_hipatia_01-07.jpg" alt="Banner 2" />
+        <img src="https://www.crisol.com.pe/media/wysiwyg/campania-home-d/bnd_banner_secundario_juguetes-01-07.jpg" alt="Banner 3" />
       </div>
 
       {/* Muestra algunos libros , agregar limite */}
