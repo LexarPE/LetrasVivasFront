@@ -1,6 +1,4 @@
 import "../../styles/global.css";
-import Search from "../IconosReact/Search";
-import { buscarLibro } from "../../services/libroService";
 
 function Banner() {
 

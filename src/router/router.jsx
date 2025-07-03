@@ -8,7 +8,6 @@ import Inicio from "../pages/Inicio";
 import LogReg from "../pages/LoginRegistro"; // Colocar como ruta inicial
 import DetalleLibro from "../pages/DetalleLibro"; 
 import Catalogo from "../pages/Catalogo";
-import Categorias from "../pages/Categorias";
 import Pedidos from "../pages/Pedidos";
 import Favoritos from "../pages/Favoritos";
 
@@ -37,11 +36,7 @@ export const router = createBrowserRouter([
         element: <Catalogo />,
       },
       {
-        path: "categorias",
-        element: <Categorias/>
-      },
-      {
-        path: "list-pedidos",
+        path: "biblioteca",
         element: <Pedidos/>
       },
       {

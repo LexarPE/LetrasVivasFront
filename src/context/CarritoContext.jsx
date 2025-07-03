@@ -4,7 +4,6 @@ import {
   guardarCarrito,
   guardarCarritoLocal,
   obtenerCarrito,
-  obtenerCarritoLocal,
 } from "../services/carritoService";
 
 export const CarritoContext = createContext();

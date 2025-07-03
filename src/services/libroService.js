@@ -25,16 +25,6 @@ export const obtenerLibroPorId = async (id) => {
   }
 }
 
-export const buscarLibro = async (query) => {
-  try {
-    const response = await axiosInstance.get(`/libros/buscar/${query}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error al buscar el libro:", error);
-    throw error;
-  }
-}
-
 
 export const guardarLibro = async (libro) => {
   try {
