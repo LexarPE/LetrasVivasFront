@@ -56,7 +56,6 @@ function CatalogoLibros({ libros, masvendidosLibros }) {
     // En el index de la carpeta router se define a donde redirigir
     navigate(`/libros/${id}`);
   };
-
   return (
     <div className="catalogo-container">
       <div className="banners">
@@ -67,18 +66,26 @@ function CatalogoLibros({ libros, masvendidosLibros }) {
 
       {/* Muestra algunos libros , agregar limite */}
       <div className="libros-grid">
-        {libros.map((libro, i) => (
-          <CardLibro libro={libro} onClick={irADetalle} key={i} />
-        ))}
+        {libros.length > 0
+          ? libros
+              .slice(0, 5)
+              .map((libro, i) => (
+                <CardLibro libro={libro} onClick={irADetalle} key={i} />
+              ))
+          : null}
       </div>
       <div className="separador">
         <span>LO MÁS VENDIDO</span>
       </div>
       {/* Muestra los libros mas vendidos (top 6, modificable) */}
       <div className="libros-grid">
-        {masvendidosLibros.map((libro, i) => (
-          <CardLibro libro={libro} onClick={irADetalle} key={i} />
-        ))}
+        {masvendidosLibros.length > 0
+          ? masvendidosLibros
+              .slice(0, 5)
+              .map((libro, i) => (
+                <CardLibro libro={libro} onClick={irADetalle} key={i} />
+              ))
+          : null}
       </div>
     </div>
   );

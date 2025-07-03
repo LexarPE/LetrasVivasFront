@@ -6,8 +6,8 @@ import { axiosInstance, axiosInstanceToken } from "../api/axiosInstance";
 
 export const obtenerLibros = async () => {
   try {
-    const response = await axiosInstance.get("/libros");
-    return response.data;
+    const response = await axiosInstance.get("libro/listar");
+    return response.data.libros;
   } catch (error) {
     console.error("Error al obtener los libros:", error);
     throw error;
@@ -17,8 +17,8 @@ export const obtenerLibros = async () => {
 
 export const obtenerLibroPorId = async (id) => {
   try {
-    const response = await axiosInstance.get(`/libros/${id}`);
-    return response.data;
+    const response = await axiosInstance.get(`libro/${id}`);
+    return response.data.libro;
   } catch (error) {
     console.error("Error al obtener el libro por ID:", error);
     throw error;
@@ -60,8 +60,8 @@ export const favoritosUsuario = async (usuarioId) => {
 
 export const librosMasVendidos = async () => {
   try {
-    const response = await axiosInstance.get("/libros/masvendidos");
-    return response.data;
+    const response = await axiosInstance.get("libro/listar");
+    return response.data.libro;
   } catch (error) {
     console.error("Error al obtener los libros más vendidos:", error);
     throw error;

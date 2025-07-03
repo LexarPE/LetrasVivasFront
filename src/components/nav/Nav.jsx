@@ -17,6 +17,7 @@ function Nav() {
 
   const cerrarSesion = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("auth")
     settokenVerificacion(false);
     navigate("/");
   };

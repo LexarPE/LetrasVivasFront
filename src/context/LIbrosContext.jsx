@@ -16,73 +16,43 @@ export const LibrosContext = createContext();
 
 
 export const LibrosProvider = ({ children }) => {
-  // COMENTAR
-  const books = [
-    {
-      id: 1,
-      titulo: "El gran libro juego del espacio",
-      precio: 80,
-      imagen: "/libros/espacio.webp",
-    },
-    {
-      id: 2,
-      titulo: "El gran libro juego de las civilizaciones",
-      precio: 80,
-      imagen: "/libros/civ.jpg",
-    },
-    {
-      id: 3,
-      titulo: "Escapando de la mansión embrujada",
-      precio: 80,
-      imagen: "/libros/mansion.jpg",
-    },
-    {
-      id: 4,
-      titulo: "Feast",
-      precio: 80,
-      imagen: "/libros/feast.jpg",
-    },
-    {
-      id: 5,
-      titulo: "Epic History of the Incas",
-      precio: 80,
-      imagen: "/libros/incas.jpg",
-    },
-    {
-      id: 6,
-      titulo: "Todo está j*dido",
-      precio: 80,
-      imagen: "/libros/todo2.jpg",
-    },
-  ];
+
 
   const [libros, setLibros] = useState([]);
   const [masvendidosLibros, setMasVendidosLibros] = useState([]);
 
   // Cargar los libros y los más vendidos al iniciar el contexto
   useEffect(() => {
-    // Descomentar cuanto tenga conexion al back
+    const cargarDatos = async () => {
+      try {
+        // Llama a la función que retorna la promesa
+        const Datalibros = await obtenerLibros();
+        setLibros(Datalibros);
+        
 
-    // let Datalibros = obtenerLibros();
-    // let DatalibrosMasVendidos = librosMasVendidos();
-    // setLibros(Datalibros);
-    // setMasVendidosLibros(DatalibrosMasVendidos);
+        const DatalibrosMasVendidos = await obtenerLibros();
+        setMasVendidosLibros(DatalibrosMasVendidos);
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      }
+    };
 
-    // Comentar 
-    setLibros(books);
-    setMasVendidosLibros(books)
+    cargarDatos();
   }, []);
   
+  
   const libroPorId = async (id) => {
-    //Descomentar cunado tenga conexion al back
-    // let libroObtenido = await obtenerLibroPorId(id);
-    // return libroObtenido;
-
-    //Pruebas sin back
-    let mostrarBooks = books.filter((obj)=> obj.id == id)
-    return mostrarBooks[0]
+    // Descomentar cunado tenga conexion al back
+    
+    try {
+      // Llama a la función que retorna la promesa
+      const libroObtenido = await obtenerLibroPorId(id);
+      return libroObtenido;
+      
+    } catch (error) {
+      console.error("Error al obtener libro:", error);
+    }
   };
-
 
 
   return (

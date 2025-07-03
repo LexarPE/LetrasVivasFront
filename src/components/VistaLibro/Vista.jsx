@@ -7,7 +7,7 @@ import { CarritoContext } from "../../context/CarritoContext";
 import Nav from "../nav/Nav";
 
 export default function Vista({
-  libro: { id, urlLibro, titulo, stars, descripcion, precio, stock },
+  libro: { id, urlLibro, titulo, stars, descripcion, precio, url_portada },
 }) {
   const { agregarAlCarrito } = useContext(CarritoContext);
 
@@ -17,11 +17,11 @@ export default function Vista({
     agregarAlCarrito({
       id,
       urlLibro,
+      url_portada,
       titulo,
       stars,
       descripcion,
       precio,
-      stock,
     });
 
     // ✅ Mostrar alerta por 2.5 segundos
@@ -44,7 +44,7 @@ export default function Vista({
 
       <div className="flex justify-center py-3">
         <img
-          src={`${urlLibro}`}
+          src={`${url_portada}`}
           alt="imagen_de_libro"
           className="max-h-[500px] object-contain"
         />
@@ -62,9 +62,6 @@ export default function Vista({
         </p>
         <div className="flex flex-col pb-3">
           <p className="text-[20px] md:text-[22px] font-medium">S/.{precio}</p>
-          <span className="text-[12px]">
-            Stock: <span className="font-medium">{stock}</span>
-          </span>
         </div>
 
         <div className="flex gap-2.5 md:block">

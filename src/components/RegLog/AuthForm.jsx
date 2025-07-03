@@ -5,8 +5,14 @@ import "../../styles/global.css";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext.jsx";
 
+import { AuthContext } from "../../context/AuthContext.jsx";
+
+
 export default function AuthForm() {
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
+
   const { usuario, setUsuario, guardarUsuario, iniciarSesion } =
     useContext(UserContext);
 
@@ -100,6 +106,9 @@ export default function AuthForm() {
 
       setUsuario(getLogin.token);
       localStorage.setItem("token", getLogin.token);
+      localStorage.getItem("token")
+        ? login(getLogin.token)
+        : null;
       navigate("/");
     } catch (error) {
       mostrarAlerta(error.message);

@@ -1,10 +1,10 @@
+
 import AuthForm from "../components/RegLog/AuthForm";
 import "../styles/global.css";
 
 
 
 function LogReg() {
-
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">

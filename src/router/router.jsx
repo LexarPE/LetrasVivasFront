@@ -1,17 +1,14 @@
 // 6.
 
-
 import { createBrowserRouter } from "react-router-dom";
-
 
 import Inicio from "../pages/Inicio";
 import LogReg from "../pages/LoginRegistro"; // Colocar como ruta inicial
-import DetalleLibro from "../pages/DetalleLibro"; 
+import DetalleLibro from "../pages/DetalleLibro";
 import Catalogo from "../pages/Catalogo";
 import Pedidos from "../pages/Pedidos";
 import Favoritos from "../pages/Favoritos";
-
-
+import RutaPrivada from "../components/RutaPrivada";
 
 export const router = createBrowserRouter([
   {
@@ -37,12 +34,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "biblioteca",
-        element: <Pedidos/>
+        element: (
+          <RutaPrivada>
+            <Pedidos />
+          </RutaPrivada>
+        ),
       },
       {
         path: "favoritos",
-        element: <Favoritos/>
-      }
+        element: (
+        <RutaPrivada>
+          <Favoritos />
+        </RutaPrivada>
+      )
+      },
     ],
   },
 ]);
