@@ -77,7 +77,19 @@ export default function Vista({
               <Compartir />
             </span>
             <span>
-              <Favorito />
+              {localStorage.getItem("token")?.length > 100 && (
+                <Favorito
+                  libro={{
+                    id,
+                    urlLibro,
+                    titulo,
+                    stars,
+                    descripcion,
+                    precio,
+                    url_portada,
+                  }}
+                />
+              )}
             </span>
           </div>
         </div>

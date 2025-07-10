@@ -1,7 +1,16 @@
-export default function Favorito(){
-  const AddFavorite = () => {
-    alert("Agregaste a favorito");
+import { useContext } from "react";
+import { LibrosContext } from "../../context/LIbrosContext";
+
+export default function Favorito({ libro }) {
+  const {addFavorito } = useContext(LibrosContext);
+  const datosLocales = localStorage.getItem("favoritos");
+  sessionStorage.setItem("favoritos",datosLocales)
+  const AddFavorite = async() => {
+    const reuslt = await addFavorito(libro)
+    reuslt ? alert("Ya agregaste este libro ❌") :
+    alert("Agregado a favoritos ✔");
   };
+  
   return (
     <svg
       width="18"
