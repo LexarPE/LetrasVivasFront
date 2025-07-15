@@ -1,8 +1,6 @@
 // 4.
 
-
 import { axiosInstance, axiosInstanceToken } from "../api/axiosInstance";
-
 
 export const obtenerLibros = async () => {
   try {
@@ -12,8 +10,7 @@ export const obtenerLibros = async () => {
     console.error("Error al obtener los libros:", error);
     throw error;
   }
-}
-
+};
 
 export const obtenerLibroPorId = async (id) => {
   try {
@@ -23,8 +20,7 @@ export const obtenerLibroPorId = async (id) => {
     console.error("Error al obtener el libro por ID:", error);
     throw error;
   }
-}
-
+};
 
 export const guardarLibro = async (libro) => {
   try {
@@ -34,29 +30,39 @@ export const guardarLibro = async (libro) => {
     console.error("Error al guardar el libro:", error);
     throw error;
   }
-}
+};
 
-
-export const librosUsuario = async (usuarioId) => {
+export const librosUsuario = async () => {
   try {
-    const response = await axiosInstanceToken.get(`/libros/usuario/${usuarioId}`);
+    const response = await axiosInstanceToken.get(`libros/usuario`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener los libros del usuario:", error);
     throw error;
   }
-}
+};
 
-
-export const favoritosUsuario = async (usuarioId) => {
+export const obtenerPDF = async (id) => {
   try {
-    const response = await axiosInstanceToken.get(`/libros/favoritos/${usuarioId}`);
+    const response = await axiosInstanceToken.get(`libros/${id}/pdf`)
+    return response.data
+  } catch (error) {
+    console.log("Error al obtener PDF")
+    throw error
+  }
+};
+
+export const favoritosUsuario = async () => {
+  try {
+    const response = await axiosInstanceToken.get(
+      `libros/favoritos`
+    );
     return response.data;
   } catch (error) {
     console.error("Error al obtener los favoritos del usuario:", error);
     throw error;
   }
-}
+};
 
 export const librosMasVendidos = async () => {
   try {
@@ -66,4 +72,4 @@ export const librosMasVendidos = async () => {
     console.error("Error al obtener los libros más vendidos:", error);
     throw error;
   }
-}
+};

@@ -5,7 +5,6 @@ import { useContext } from "react";
 
 const RutaPrivada = ({ children }) => {
   const { user } = useContext(AuthContext);
-  console.log(user)
   return localStorage.getItem("auth") ? children : <Navigate to="/" />;
 };
 
