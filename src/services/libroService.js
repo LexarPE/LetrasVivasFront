@@ -1,7 +1,8 @@
 // 4.
-
+import axios from "axios";
 import { axiosInstance, axiosInstanceToken } from "../api/axiosInstance";
 
+// OK
 export const obtenerLibros = async () => {
   try {
     const response = await axiosInstance.get("libro/listar");
@@ -12,6 +13,7 @@ export const obtenerLibros = async () => {
   }
 };
 
+// OK
 export const obtenerLibroPorId = async (id) => {
   try {
     const response = await axiosInstance.get(`libro/${id}`);
@@ -22,16 +24,27 @@ export const obtenerLibroPorId = async (id) => {
   }
 };
 
-export const guardarLibro = async (libro) => {
+
+// OK
+export const agregarFavorito = async (idUser,idLibro) => {
   try {
-    const response = await axiosInstanceToken.post("/savelibro", libro);
+    const response = await axiosInstanceToken.post("favoritos/agregar", {
+      id_usuario: `${idUser}`,
+      id_libro: `${idLibro}`,
+    });
     return response.data;
   } catch (error) {
-    console.error("Error al guardar el libro:", error);
+    console.log("Error al agregar Favoritos");
+    if (axios.isAxiosError(error) && error.response?.status === 409) {
+      console.error("Conflicto: ya existe ese favorito o hay inconsistencia");
+      return true
+    }
     throw error;
   }
 };
 
+
+// 
 export const librosUsuario = async () => {
   try {
     const response = await axiosInstanceToken.get(`libros/usuario`);
@@ -42,21 +55,23 @@ export const librosUsuario = async () => {
   }
 };
 
+
+//
 export const obtenerPDF = async (id) => {
   try {
-    const response = await axiosInstanceToken.get(`libros/${id}/pdf`)
-    return response.data
+    const response = await axiosInstanceToken.get(`libros/${id}/pdf`);
+    return response.data;
   } catch (error) {
-    console.log("Error al obtener PDF")
-    throw error
+    console.log("Error al obtener PDF");
+    throw error;
   }
 };
 
+
+//
 export const favoritosUsuario = async () => {
   try {
-    const response = await axiosInstanceToken.get(
-      `libros/favoritos`
-    );
+    const response = await axiosInstanceToken.get(`libros/favoritos`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener los favoritos del usuario:", error);
@@ -64,6 +79,8 @@ export const favoritosUsuario = async () => {
   }
 };
 
+
+//
 export const librosMasVendidos = async () => {
   try {
     const response = await axiosInstance.get("libro/listar");

@@ -13,7 +13,7 @@ export default function AuthForm() {
 
   const { login } = useContext(AuthContext);
 
-  const { usuario, setUsuario, guardarUsuario, iniciarSesion } =
+  const { usuario, setIdUser, setUsuario, guardarUsuario, iniciarSesion } =
     useContext(UserContext);
 
   useEffect(() => {
@@ -105,6 +105,7 @@ export default function AuthForm() {
       }
 
       setUsuario(getLogin.token);
+      setIdUser(getLogin.id);
       localStorage.setItem("token", getLogin.token);
       localStorage.getItem("token")
         ? login(getLogin.token)

@@ -4,7 +4,7 @@ import { createContext, useState, useEffect } from "react";
 import {
   obtenerLibros,
   obtenerLibroPorId,
-  guardarLibro,
+  agregarFavorito,
   librosUsuario,
   favoritosUsuario,
   librosMasVendidos,
@@ -47,9 +47,11 @@ export const LibrosProvider = ({ children }) => {
     }
   };
 
-  const addFavorito = async (objetoLibro) => {
+  const addFavorito = async (idUser,objetoLibro) => {
     if (!favoritos.some((obj) => obj.id === objetoLibro.id)) {
+      const result = await agregarFavorito(idUser,objetoLibro.id);
       setFavoritos([...favoritos, objetoLibro]);
+      if(result == true) return true
       return false
     }
     return true

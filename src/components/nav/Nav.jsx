@@ -18,6 +18,8 @@ function Nav() {
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("auth")
+    localStorage.removeItem("favoritos")
+    localStorage.removeItem("ideUser")
     settokenVerificacion(false);
     navigate("/");
   };

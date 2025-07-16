@@ -4,6 +4,8 @@
 
 import { axiosInstance} from "../api/axiosInstance";
 
+
+//OK
 export const guardarUsuario = async (usuario) => {
   try { 
     const dataUser = {
@@ -23,6 +25,8 @@ export const guardarUsuario = async (usuario) => {
   }
 };
 
+
+//OK
 export const iniciarSesion = async (usuario) => {
   try {
     const response = await axiosInstance.post("auth/iniciar-sesion", usuario);

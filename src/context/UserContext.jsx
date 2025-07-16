@@ -12,9 +12,31 @@ export const UserContext = createContext();
 // UserProvider es un componente proveedor.
 export const UserProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
+  const [idUr, setIdU] = useState(null)
+
+  const setIdUser = (id)=>{
+    const idu = localStorage.getItem("ideUser")
+    if(!idu){
+      localStorage.setItem("ideUser",id)
+    }
+    else setIdU(idu)
+  }
+
+  const idUser = ()=>{
+    return localStorage.getItem("ideUser");
+  }
 
   return (
-    <UserContext.Provider value={{ usuario, setUsuario, guardarUsuario , iniciarSesion }}>
+    <UserContext.Provider
+      value={{
+        idUser,
+        setIdUser,
+        usuario,
+        setUsuario,
+        guardarUsuario,
+        iniciarSesion,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
