@@ -9,6 +9,8 @@ export default function DetalleLibro() {
 
   const { id } = useParams();
   const [libro, setLibro] = useState({});
+  const [resenas, setResenas] = useState([])
+  const [comentarios, setComentarios] = useState([])
 
   const { libroPorId } = useContext(LibrosContext);
 
@@ -16,11 +18,14 @@ export default function DetalleLibro() {
     // Extrae el libro por id del contexto
     let getLibro = async () => {
       const libroObtenido = await libroPorId(id);
-      setLibro(libroObtenido || {});
+      setLibro(libroObtenido[0] || {});
+      setResenas(libroObtenido[1])
+      setComentarios(libroObtenido[2])
     };
     getLibro()
     // Guarda el libro obtenido en el estado
   }, [id,libroPorId]);
+
   if (libro.id == null) {
     return <p className="text-3xl text-center">Cargando...</p>;
   }
@@ -28,10 +33,9 @@ export default function DetalleLibro() {
   return (
     <>
       {/*  urlLibro, titulo, stars, descripcion, precio, stock */}
-      {/* Quitar books y colocar libro */}
-      <Vista libro={libro} />
+      <Vista libro={libro} stars={resenas} />
       {/* nombre, comentario */}
-      <CardComentarios Comentarios={[]} />
+      <CardComentarios Comentarios={comentarios} />
     </>
   );
 }

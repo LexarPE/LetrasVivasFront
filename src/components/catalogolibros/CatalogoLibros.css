@@ -24,7 +24,9 @@
 }
 
 .libro-card {
-  width: 150px;
+  width: 200px;
+  height: 276px;
+  max-width: max-content;
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 10px;

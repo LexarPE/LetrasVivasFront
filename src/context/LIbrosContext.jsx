@@ -14,6 +14,7 @@ export const LibrosContext = createContext();
 
 export const LibrosProvider = ({ children }) => {
   const [libros, setLibros] = useState([]);
+  const [libCat, setLibCat] = useState([])
   const [masvendidosLibros, setMasVendidosLibros] = useState([]);
   const [favoritos, setFavoritos] = useState([]);
 
@@ -41,20 +42,26 @@ export const LibrosProvider = ({ children }) => {
     try {
       // Llama a la función que retorna la promesa
       const libroObtenido = await obtenerLibroPorId(id);
-      return libroObtenido;
+      const libroEncontrado = libros.find((i) => i.id == id);
+      if (libroEncontrado) {
+        const resenas = libroEncontrado.resenas;
+        const comentarios = libroEncontrado.comentarios;
+        return [libroObtenido, resenas, comentarios];
+        
+      }
     } catch (error) {
       console.error("Error al obtener libro:", error);
     }
   };
 
-  const addFavorito = async (idUser,objetoLibro) => {
+  const addFavorito = async (idUser, objetoLibro) => {
     if (!favoritos.some((obj) => obj.id === objetoLibro.id)) {
-      const result = await agregarFavorito(idUser,objetoLibro.id);
+      const result = await agregarFavorito(idUser, objetoLibro.id);
       setFavoritos([...favoritos, objetoLibro]);
-      if(result == true) return true
-      return false
+      if (result == true) return true;
+      return false;
     }
-    return true
+    return true;
   };
 
   const datosLocales = JSON.parse(localStorage.getItem("favoritos")) || [];
@@ -75,15 +82,26 @@ export const LibrosProvider = ({ children }) => {
         !datosSesion.some((libroSesion) => libroSesion.id === libroFavorito.id)
     ),
   ];
-  
+
+  function setLib(lisLib){
+    setLibCat(lisLib)
+    console.log(lisLib)
+  }
 
   // Guardar en localStorage correctamente (en formato JSON)
   localStorage.setItem("favoritos", JSON.stringify(combinadosSinDuplicados));
-  
 
   return (
     <LibrosContext.Provider
-      value={{ libros, masvendidosLibros, libroPorId, favoritos, addFavorito }}
+      value={{
+        libros,
+        setLib,
+        libCat,
+        masvendidosLibros,
+        libroPorId,
+        favoritos,
+        addFavorito,
+      }}
     >
       {children}
     </LibrosContext.Provider>

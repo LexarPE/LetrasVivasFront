@@ -3,24 +3,30 @@ import { LibrosContext } from "../../context/LIbrosContext";
 import { UserContext } from "../../context/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 
-export default function Favorito({ libro }) {
-  const {addFavorito } = useContext(LibrosContext);
-  const {idUser} = useContext(UserContext)
+export default function Favorito({ libro, idfav }) {
+  const { addFavorito } = useContext(LibrosContext);
+  const { idUser } = useContext(UserContext);
   const datosLocales = localStorage.getItem("favoritos");
-  sessionStorage.setItem("favoritos",datosLocales)
-  const AddFavorite = async() => {
-    const dtiu = idUser()
+  sessionStorage.setItem("favoritos", datosLocales);
+  const AddFavorite = async () => {
+    const dtiu = idUser();
     const reuslt = await addFavorito(dtiu, libro);
-    reuslt ? toast.error("Ya esta agregado") : toast.success("Agregado a favoritos");
+    reuslt
+      ? toast.error("Ya esta agregado")
+      : toast.success("Agregado a favoritos");
   };
-  
+  let colorFondoCorazon = "none";
+  if (idfav[0]) {
+    colorFondoCorazon = "#ff0000";
+  }
+
   return (
     <>
       <svg
         width="18"
         height="24"
         viewBox="0 0 24 24"
-        fill="none"
+        fill={colorFondoCorazon}
         xmlns="http://www.w3.org/2000/svg"
         className="w-[14px] md:w-[18px] cursor-pointer"
         onClick={AddFavorite}

@@ -1,6 +1,6 @@
 import UserComentario from "../IconosReact/IconoUserComentario";
 
-export default function Comentario({ info: { nombre, comentario } }) {
+export default function Comentario({ info: { usuario : {nombre}, comentario } }) {
   return (
     <div className="p-2 bg-[#F6FAFF] rounded-[5px] shadow-[#0b367f91] shadow-sm">
       <div className="flex items-center gap-1">
