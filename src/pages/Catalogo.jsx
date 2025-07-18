@@ -1,21 +1,19 @@
 import Nav from "../components/nav/Nav";
-import { useContext} from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LIbrosContext";
 import CardLibro from "../components/catalogolibros/CardLibro";
-import SidebarCategorias from "../components/SideBarCategorias";
+import SidebarCategorias from "../components/SidebarCategorias";
 
 export default function Catalogo() {
   const navigate = useNavigate();
   const { libros, setLib, libCat } = useContext(LibrosContext);
-
 
   const cargarFiltro = (nomCat) => {
     const filtrados =
       nomCat == null ? libros : libros.filter((i) => i.categoria === nomCat);
     setLib(filtrados);
   };
-
 
   return (
     <div className="h-screen">
