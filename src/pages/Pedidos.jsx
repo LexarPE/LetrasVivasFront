@@ -60,7 +60,9 @@ export default function Pedidos() {
 
   const ejecutar = async (id) => {
     try {
-      const url = "/libro.pdf"; // Reemplaza luego con: const blob = await obtenerPDF(id)
+      const url =
+        "./coquito.pdf";
+      // Reemplaza luego con: const blob = await obtenerPDF(id)
       setPdfURL(url);
       setPageNumber(1);
       await renderPDF(url, 1);

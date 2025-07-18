@@ -25,8 +25,9 @@
 
 .libro-card {
   width: 200px;
-  height: 276px;
+  height: 350px;
   max-width: max-content;
+  max-height: max-content;
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 10px;
@@ -37,8 +38,8 @@
 
 .libro-card img {
   width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+  height: 80%;
+  object-fit: contain;
 }
 
 .titulo {
