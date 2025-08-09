@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-export default function LibroFav({ libro }) {
-  const navigate = useNavigate()
-  if (!libro || !libro.id) return null;
+export default function LibroBibli({ libro }) {
+  const navigate = useNavigate();
+
+  if (!libro || !libro.libro_id) return null;
 
   function irDetalle() {
-    navigate(`/libro/${libro.id}`);
+    navigate(`/viewPdf/${libro.libro_id}`);
   }
 
   return (
@@ -20,7 +21,7 @@ export default function LibroFav({ libro }) {
       ></img>
       <div className="group absolute hover:bg-[#1E2630] w-full h-[260px] sm:h-[280px] rounded-xl opacity-70 flex items-center hover:cursor-pointer transition-all select-none">
         <h6 className="invisible w-full text-center group-hover:visible group-hover:text-white">
-          Ver detalles
+          Leer
         </h6>
       </div>
       <div className="w-full px-2">
@@ -28,9 +29,8 @@ export default function LibroFav({ libro }) {
           {libro.titulo}
         </h5>
         <h5 className="truncate overflow-hidden whitespace-nowrap">
-          {libro.autor.nombre}
+          {libro.nombre_autor}
         </h5>
-        <span className="w-full font-bold py-1 ">S/.{libro.precio}</span>
       </div>
     </div>
   );

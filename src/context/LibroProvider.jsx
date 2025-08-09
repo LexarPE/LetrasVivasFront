@@ -4,6 +4,8 @@ import {
   obtenerLibros,
   agregarFavorito,
   favoritosUsuario,
+  librosUsuario,
+  libroPorId
 } from "../services/libroService";
 import {
   agregarComentario,
@@ -33,6 +35,15 @@ export default function LibroProvider({ children }) {
     return lib[0];
   }
 
+  async function libroBiblioteId(id) {
+    const libs = await libroPorId(id);
+    return libs;
+  }
+
+  async function bibliotecaUsuario() {
+    const bU = await librosUsuario();
+    return bU
+  }
   // async function obtenerAutor(id) {
   //   return ""
   // }
@@ -46,6 +57,8 @@ export default function LibroProvider({ children }) {
         agregarCalificacion,
         agregarFavorito,
         favoritosUsuario,
+        bibliotecaUsuario,
+        libroBiblioteId,
       }}
     >
       {children}

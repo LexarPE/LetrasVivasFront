@@ -2,12 +2,16 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useContext } from "react";
 import { CarritoContext } from "../context/Context";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const carritoContext = useContext(CarritoContext)
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,25 +20,13 @@ export default function Pago() {
     setLoading(true);
 
     const res = await carritoContext.pagar()
+    console.log(res)
 
-    // Metodo de response back
-    const { clientSecret } = await res.json();
-
-    console.log("Cliente secret")
-    console.log(clientSecret)
-    
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    });
-
-    if (result.error) {
-      alert("Error: " + result.error.message);
+    if (!res) {
+      toast.error("Error: " + res.error.message);
     } else {
-      if (result.paymentIntent.status === "succeeded") {
-        alert("¡Pago exitoso!");
-      }
+      toast.success(res.mensaje);
+      navigate("/")
     }
 
     setLoading(false);

@@ -43,11 +43,21 @@ export const favoritosUsuario = async (id) => {
   }
 };
 
-//
+export const libroPorId = async (id)=>{
+  try {
+    const response = await axiosInstanceToken.get(`libro/${id}`);
+    return response.data.libro;
+  } catch (error) {
+    console.error("Error al obtener los libros del usuario:", error);
+    throw error;
+  }
+}
+
+//OK
 export const librosUsuario = async () => {
   try {
-    const response = await axiosInstanceToken.get(`libros/usuario`);
-    return response.data;
+    const response = await axiosInstanceToken.get(`libro/listar/biblioteca/0`);
+    return response.data.libros;
   } catch (error) {
     console.error("Error al obtener los libros del usuario:", error);
     throw error;
