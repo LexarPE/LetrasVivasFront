@@ -8,6 +8,14 @@ import RutaPrivada from "../components/RutaPrivada";
 import Biblioteca from "../pages/Biblioteca";
 import Favoritos from "../pages/Favoritos";
 
+// Pago
+import { Elements } from "@stripe/react-stripe-js";
+import Pago from "../pages/Pago";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  "pk_test_51RpXVNC1Fs0061BHBke5Ca2uFw21zzrdtFVhYdF7cSUNzDc5KhnKNJw4Xt95GrtXXN0sbtr8UoF1lFKxdtOM8yCB009DEuMEph"
+);
+
 
 export const router = createBrowserRouter([
   {
@@ -31,15 +39,29 @@ export const router = createBrowserRouter([
       },
       {
         path: "biblioteca",
-        element: <RutaPrivada>
-          <Biblioteca/>
-        </RutaPrivada>,
+        element: (
+          <RutaPrivada>
+            <Biblioteca />
+          </RutaPrivada>
+        ),
       },
       {
         path: "favoritos",
-        element: <RutaPrivada>
-          <Favoritos/>
-        </RutaPrivada>,
+        element: (
+          <RutaPrivada>
+            <Favoritos />
+          </RutaPrivada>
+        ),
+      },
+      {
+        path: "pagar",
+        element: (
+          <RutaPrivada>
+            <Elements stripe={stripePromise} >
+              <Pago />
+            </Elements>
+          </RutaPrivada>
+        ),
       },
     ],
   },

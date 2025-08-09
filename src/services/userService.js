@@ -15,7 +15,7 @@ export const guardarUsuario = async (usuario) => {
       nombre: usuario.nombre,
       correo: usuario.correo,
       contrasena: usuario.contrasena,
-      rol: "USER",
+      rol: "CLIENTE",
     };
 
     const response = await axiosInstance.post("auth/registrar", dataUser);

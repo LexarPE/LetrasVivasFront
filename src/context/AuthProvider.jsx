@@ -5,19 +5,22 @@ import { useState } from "react";
 
 export default function AuthProvider({ children }) {
   const [acess,setAcess] = useState(false)
-
+  const [id, setIdUser] = useState(null)
   async function agregarToken(tk) {
     sessionStorage.setItem("sesion", JSON.stringify(tk));
   }
 
   function validarToken() {
     const raw = sessionStorage.getItem("acess")
-    if (!raw) return false; // Si es null o vacío, salimos
+    const se = sessionStorage.getItem("sesion")
+    if (!raw ) return false; // Si es null o vacío, salimos
     
     const sePass = JSON.parse(raw);
+    const seSe = JSON.parse(se);
     
     if (sePass) {
       setAcess(sePass)
+      setIdUser(seSe.id)
       return true
     }
     console.log("sin verificar");
@@ -25,7 +28,6 @@ export default function AuthProvider({ children }) {
   }
 
   function eliminarToken() {
-    sessionStorage.setItem("sesion", "");
     sessionStorage.clear()
     setAcess(false)
     return true;
@@ -33,6 +35,7 @@ export default function AuthProvider({ children }) {
 
   async function crearCuenta(user) {
     guardarUsuario(user);
+    return true
   }
 
   async function acceder(user) {
@@ -43,13 +46,14 @@ export default function AuthProvider({ children }) {
       sessionStorage.setItem("acess",true)
       return true;
     } catch {
+      setAcess(false)
       return false;
     }
   }
 
   return (
     <AuthContext.Provider
-      value={{ crearCuenta, acceder, validarToken, eliminarToken, acess }}
+      value={{ crearCuenta, acceder, validarToken, eliminarToken, acess,id}}
     >
       {children}
     </AuthContext.Provider>

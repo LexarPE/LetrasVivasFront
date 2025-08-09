@@ -14,17 +14,19 @@ export const obtenerLibros = async () => {
 };
 
 // OK
-export const agregarFavorito = async (idUser,idLibro) => {
+export const agregarFavorito = async (idUser, idLibro) => {
   try {
-    const response = await axiosInstanceToken.post("favoritos/agregar", {
-      id_usuario: `${idUser}`,
-      id_libro: `${idLibro}`,
-    });
+    const response = await axiosInstanceToken.post(
+      `favoritos/agregar/${idUser}`,
+      {
+        id_libro: `${idLibro}`,
+      }
+    );
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 409) {
       console.error("Conflicto: ya existe ese favorito o hay inconsistencia");
-      return true
+      return true;
     }
     throw error;
   }
@@ -33,9 +35,7 @@ export const agregarFavorito = async (idUser,idLibro) => {
 //OK
 export const favoritosUsuario = async (id) => {
   try {
-    const response = await axiosInstanceToken.get(
-      `favoritos/listar/${id}`
-    );
+    const response = await axiosInstanceToken.get(`favoritos/listar/${id}`);
     return response.data.favoritos;
   } catch (error) {
     console.error("Error al obtener los favoritos del usuario:", error);
@@ -43,9 +43,7 @@ export const favoritosUsuario = async (id) => {
   }
 };
 
-
-
-// 
+//
 export const librosUsuario = async () => {
   try {
     const response = await axiosInstanceToken.get(`libros/usuario`);
@@ -55,7 +53,6 @@ export const librosUsuario = async () => {
     throw error;
   }
 };
-
 
 //
 export const obtenerPDF = async (id) => {
@@ -67,6 +64,3 @@ export const obtenerPDF = async (id) => {
     throw error;
   }
 };
-
-
-

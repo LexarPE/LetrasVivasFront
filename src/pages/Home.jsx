@@ -16,7 +16,7 @@ export default function Home() {
   }, [authContext]);
   return (
     <div className="bg-gray-100 pb-5 min-h-screen">
-      <Carrito verificacion={validacion}/>
+      <Carrito verificacion={validacion} idUser={authContext.id} />
       <Nav />
       <Banner />
       <ContainerBookHome

@@ -2,6 +2,7 @@ import { useState, useContext, useEffect} from "react";
 import { ChevronDown } from "lucide-react";
 import Nav from "../components/Nav";
 import ContainerBookHome from "../components/ContenedorLibrosInicio";
+import Carrito from "../components/Carrito";
 import { LibroContext } from "../context/Context";
 import { AuthContext } from "../context/Context";
 
@@ -48,6 +49,7 @@ export default function Catalogo() {
   }
   return (
     <div className="bg-gray-100  relative">
+      <Carrito verificacion={validacion} idUser={authContext.id} />
       <Nav />
       <div>
         <div className="lg:w-4xl mx-auto flex justify-end">
