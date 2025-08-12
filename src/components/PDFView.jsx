@@ -24,8 +24,7 @@ export default function PDFCanvasViewer() {
     const cargarPDF = async () => {
       const libro = await libroProvider.libroBiblioteId(id);
       // const urlDeLibro ="/dummy.pdf";
-      const urlDeLibro =
-        libro.url_libro;
+      const urlDeLibro = libro.url_libro;
 
       const loadingTask = pdfjsLib.getDocument(urlDeLibro);
       const pdf = await loadingTask.promise;
