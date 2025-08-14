@@ -30,14 +30,12 @@ export const obtenerCarrito = async (id) => {
 }
 
 
-export const pagarCarrito = async (id,monto)=>{
+export const pagarCarrito = async ()=>{
   try {
-    const response = await axiosInstanceToken.post(`api/pago/confirmar/${id}`,{
-      monto: monto 
-    });
+    const response = await axiosInstanceToken.post(`api/pago/crear-intento`);
     return response.data;
   } catch (error) {
-    console.error("Error al pagar el carrito:", error);
+    console.error("Error al obtener clientSecret:", error);
     throw error;
   }
 }

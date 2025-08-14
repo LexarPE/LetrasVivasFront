@@ -9,25 +9,42 @@ export default function Pago() {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
-  const carritoContext = useContext(CarritoContext)
+  const carritoContext = useContext(CarritoContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!stripe || !elements) return;
+    let clientSecret = ''
+
+    // Obtiene el clientSecret
+    const res = await carritoContext.pagar();
+    console.log(res);
 
     setLoading(true);
-
-    const res = await carritoContext.pagar()
-    console.log(res)
-
     if (!res) {
       toast.error("Error: " + res.error.message);
     } else {
-      toast.success(res.mensaje);
-      navigate("/")
+      clientSecret = (res.clientSecret);
     }
+
+    // Se ejecuta el proceso pago
+    if (!stripe || !elements || !clientSecret) return;
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
+      }
+    );
+
+    if (error) {
+      toast.error("Ocurrio un error en el proceso de pago");
+    } else if (paymentIntent.status === "succeeded") {
+      toast.success("Pago realizado con exito");
+    }
+    navigate("/");
 
     setLoading(false);
   };

@@ -56,9 +56,10 @@ export default function CarritoProvider({ children }) {
     setIdUser(id)
   }
 
+
   function pagar() {
     if (!idUser || !total) return;
-    return pagarCarrito(idUser, total);
+    return pagarCarrito();
   }
 
   return (
